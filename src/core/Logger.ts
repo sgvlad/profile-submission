@@ -10,6 +10,12 @@ if (!dir)
     dir = path.resolve('logs');
 }
 
+let uploadDirectory = logDirectory;
+if (!uploadDirectory)
+{
+    uploadDirectory = path.resolve('uploads');
+}
+
 // create directory if it is not present
 if (!fs.existsSync(dir))
 {
