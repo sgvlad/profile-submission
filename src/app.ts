@@ -1,7 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import 'reflect-metadata';
 import { corsUrl, port } from './config';
 import { NotFoundError } from './core/ApiError';
 import routesV1 from './routes/v1';
