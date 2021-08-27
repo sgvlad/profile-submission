@@ -5,6 +5,7 @@ import { SuccessResponse } from '../../../core/ApiResponse';
 import ProfileSubmission from '../../../database/model/ProfileSubmission';
 import multer from 'multer';
 import CVRepo from '../../../database/repository/CVRepo';
+import Logger from '../../../core/Logger';
 
 const router = express.Router();
 
@@ -65,8 +66,8 @@ router.get(
 router.get(
     '/profileSubmission',
     asyncHandler(async (req, res) => {
-        console.log(req.query.cvName);
-        const pdfFile = await CVRepo.getCV();
+        Logger.debug(`CV to be downloaded : ${req.query.cvName}`);
+        const pdfFile = await CVRepo.getCV(req.query.cvName);
         res.contentType('application/pdf');
         res.write(pdfFile, 'binary');
         return res.send();
