@@ -3,6 +3,9 @@ import { Document, model, Schema } from 'mongoose';
 export const DOCUMENT_NAME = 'ProfileSubmission';
 export const COLLECTION_NAME = 'submissions';
 
+/**
+ * Profile Submission DAO.
+ */
 export default interface ProfileSubmission extends Document
 {
     candidateName: string;

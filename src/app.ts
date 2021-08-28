@@ -1,10 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { corsUrl, dbUri, port } from './config';
-import { NotFoundError } from './core/ApiError';
+import { corsUrl, dbUri, environment, port } from './config';
+import { ApiError, InternalError, NotFoundError } from './core/ApiError';
 import routesV1 from './routes/v1';
-import DbConnect from 'src/database/DBConnect';
+import DbConnect from './database/DBConnect';
 import Logger from './core/Logger';
 import * as io from 'socket.io';
 
@@ -21,6 +21,9 @@ app.use((_req, _res, next) => next(new NotFoundError()));
 
 DbConnect({db: dbUri});
 
+/**
+ * Create new socket.
+ */
 const socket = new io.Server(app
     .listen(port, () => {
         console.log(`server running on port : ${port}`);
@@ -38,8 +41,18 @@ socket.on('connection', (socket) => {
 
 app.set('socketio', socket);
 
-// Middleware Error Handler
+/**
+ * Middleware Error Handler
+ */
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
-    return res.send(err.message);
+    if (err instanceof ApiError) {
+        return ApiError.handle(err, res);
+    } else {
+        if (environment === 'development') {
+            Logger.error(err);
+            return res.status(500).send(err.message);
+        }
+        return ApiError.handle(new InternalError(), res);
+    }
 });
 
