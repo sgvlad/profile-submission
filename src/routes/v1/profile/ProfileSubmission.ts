@@ -8,7 +8,10 @@ import CVRepo from '../../../database/repository/CVRepo';
 import Logger from '../../../core/Logger';
 
 const router = express.Router();
-
+////////////////////////////////////////////////////////////
+/**
+ * Multer storage config.
+ */
 const storage = multer.diskStorage({
     destination: function (_req, _file, cb) {
         cb(null, './uploads');
@@ -20,7 +23,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({storage: storage});
+////////////////////////////////////////////////////////////
 
+/**
+ * Upload profile submission API.
+ */
 router.post('/upload', upload.any(),
     asyncHandler(async (req, res) => {
         const profileSubmission: ProfileSubmission = await ProfileSubmissionRepo.create({
@@ -45,13 +52,19 @@ router.post('/upload', upload.any(),
     })
 );
 
-router.delete('/profileSubmission',
+/**
+ * Delete profile submissions API.
+ */
+router.delete('/profileSubmissions',
     asyncHandler(async (_req, res) => {
         await ProfileSubmissionRepo.deleteAll();
         return new SuccessResponse('Profiles deleted', {}).send(res);
     })
 );
 
+/**
+ * Get profile submissions API.
+ */
 router.get(
     '/profileSubmissions',
     asyncHandler(async (_req, res) => {
@@ -63,8 +76,11 @@ router.get(
     })
 );
 
+/**
+ * Get CV based on cvName query param API.
+ */
 router.get(
-    '/profileSubmission',
+    '/cv',
     asyncHandler(async (req, res) => {
         Logger.debug(`CV to be downloaded : ${req.query.cvName}`);
         const pdfFile = await CVRepo.getCV(req.query.cvName);
