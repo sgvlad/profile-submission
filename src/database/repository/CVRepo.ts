@@ -1,5 +1,8 @@
 import * as fs from 'fs';
 
+/**
+ * Persistence layer for CVs.
+ */
 export default class CVRepo
 {
     public static async getCV(cvName: any): Promise<Buffer | void>

@@ -9,6 +9,4 @@ export const db = {
 
 export const logDirectory = process.env.LOG_DIR;
 
-export const uploadDirectory = process.env.UPLOAD_DIR;
-
-export const dbUri = 'mongodb+srv://' + db.user + ':' + db.password + '@profile-submission.dwu9g.mongodb.net/' + db.name + '?retryWrites=true&w=majority';
+export const dbUri: string = 'mongodb+srv://' + db.user + ':' + db.password + '@profile-submission.dwu9g.mongodb.net/' + db.name + '?retryWrites=true&w=majority';

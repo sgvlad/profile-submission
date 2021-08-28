@@ -31,7 +31,7 @@ router.post('/upload', upload.any(),
             createdBy: req.body.createdBy
         } as ProfileSubmission);
 
-        const totalProfileSubmissions = await ProfileSubmissionRepo.getAllSubmissionsNumber();
+        const totalProfileSubmissions = await ProfileSubmissionRepo.getAllSubmissionsCount();
         const socket = req.app.get('socketio');
         socket.emit('count', totalProfileSubmissions);
 
@@ -55,7 +55,7 @@ router.delete('/profileSubmission',
 router.get(
     '/profileSubmissions',
     asyncHandler(async (_req, res) => {
-        let profileSubmissions: ProfileSubmission[] = await ProfileSubmissionRepo.findAll();
+        let profileSubmissions: ProfileSubmission[] = await ProfileSubmissionRepo.getAll();
         profileSubmissions.length.toString();
         return new SuccessResponse(
             'Profiles',

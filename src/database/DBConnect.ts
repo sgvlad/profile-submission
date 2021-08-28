@@ -3,7 +3,10 @@ import mongoose, { ConnectOptions } from 'mongoose';
 type DBInput = {
     db: string;
 }
-
+/**
+ * Connects to the provided DB.
+ * @param db DB URI
+ */
 export default ({db}: DBInput) => {
 
     const connect = () => {

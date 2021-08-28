@@ -1,10 +1,10 @@
 import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { corsUrl, port } from './config';
+import { corsUrl, dbUri, port } from './config';
 import { NotFoundError } from './core/ApiError';
 import routesV1 from './routes/v1';
-import Connect from './database/connect';
+import DbConnect from 'src/database/DBConnect';
 import Logger from './core/Logger';
 import * as io from 'socket.io';
 
@@ -19,9 +19,7 @@ app.use('/v1', routesV1);
 // catch 404 and forward to error handler
 app.use((_req, _res, next) => next(new NotFoundError()));
 
-const db = 'mongodb+srv://profileSubmissionUser:profileSubmissionUser@profile-submission.dwu9g.mongodb.net/profile-submission?retryWrites=true&w=majority';
-
-Connect({db});
+DbConnect({db: dbUri});
 
 const socket = new io.Server(app
     .listen(port, () => {
