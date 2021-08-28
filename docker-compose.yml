@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  app:
+    # This defines the configuration options, including the context and dockerfile,
+    # that will be applied when Compose builds the application image.
+    build:
+      # This defines the build context for the image build — in this case, the current project directory.
+      context: .
+      # This specifies the Dockerfile in your current project directory as the file
+      dockerfile: Dockerfile
+    image: app
+    container_name: app
+    # This defines the restart policy. The default is no,
+    # but we have set the container to restart unless it is stopped.
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - '8080:8080'
