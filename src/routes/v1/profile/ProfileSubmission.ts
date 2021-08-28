@@ -1,5 +1,5 @@
 import express from 'express';
-import asyncHandler from '../../../helpers/asyncHandler';
+import asyncHandler from '../../../helpers/AsyncHandler';
 import ProfileSubmissionRepo from '../../../database/repository/ProfileSubmissionRepo';
 import { SuccessResponse } from '../../../core/ApiResponse';
 import ProfileSubmission from '../../../database/model/ProfileSubmission';
